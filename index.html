@@ -60,32 +60,57 @@
         }
 
         function compareAnswers (player, computer) {
+                let winner;
                 if (player - computer === 1 || player === 1 && computer === 3) {
                     console.log("You win! " + numToWord(player) + " beats " + numToWord(computer) + "!");
+                    return "player";
                 } else if (computer - player === 1 || computer === 1 && player === 3) {
                     console.log("You lose! " + numToWord(computer) + " beats " + numToWord(player) + "!");
+                    return "computer";
                 } else if (computer === player ) {
                     console.log ("You both tied with " + numToWord(player) + "!");
+                    return "tie";
                 } else {
                     console.log("Sorry.  Things got fucky.  Try again!");
                 }
 
         }
-        function startGame () {
+        function round () {
             let playerInput = getPlayerInput();
             playerInput = normalizeInput(playerInput);
             let playerNumber = wordToNumber(playerInput);
-            compareAnswers (playerNumber, getComputerInput());
-            confirm("Play again?") ? startGame() : null;
+            let winner = compareAnswers (playerNumber, getComputerInput());
+            console.log(winner);
+            return winner;
         }
 
-        startGame();
+        function Game () {
+            let playerScore = 0;
+            let computerScore = 0;
+            let i;
+            for (i = 0; i < 5; i++){
+                let winner = round();
+                if (winner === "player") {
+                    playerScore++;
+                } else if (winner === "computer"){
+                    computerScore++;
+                }
+            }
+            if (playerScore > computerScore) {
+                confirm("You won " + playerScore + " to " + computerScore + "! Play again?") ? Game() : null;
+            } else {
+                confirm("You lost " + computerScore + " to " + playerScore + "! Play again?") ? Game() : null;
+            }
+            
+        }
+        
+        
+        Game();
+        
 
 
 
     </script>
-    /*compare both to determine winner
-    return winner*/
 
 </body>
 
